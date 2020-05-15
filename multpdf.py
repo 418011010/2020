@@ -18,6 +18,7 @@ from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LTTextBoxHorizontal,LAParams
 from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 import logging
+import multiprocessing
 from tqdm import tqdm
 importlib.reload(sys)
 logging.Logger.propagate = False
@@ -117,7 +118,8 @@ def main():
     time1 = time.time()
     print(time.asctime(time.localtime(time1)))
     urlf = []
-    for n in range(4, 6):
+    pool = multiprocessing.Pool(processes=4)
+    for n in range(5, 10):
         urlf.append('http://reportapi.eastmoney.com/report/list?cb=datatable9813778&industryCode=*&pageSize=50&industry=*&rating=&ratingChange=&beginTime=2018-05-14&endTime=2020-05-14&pageNo={0}&fields=&qType=0&orgCode=&code=*&rcode=&_=1589466697703'.format(n))
 
     pbar = tqdm(urlf)
@@ -142,14 +144,16 @@ def main():
                 dd = get_content(j, my_headers, 30)
                 r = re.findall(r'"attachUrl":"(.*?)"', dd)
                 # print(r[0])
-                ppddff(r[0], j)
+
+                pool.apply_async(ppddff, (r[0], j))
 
         except Exception as e:
             print('网页打开异常', str(e))
         finally:
             time2 = time.time()
             print(time.asctime(time.localtime(time2)))
-
+    pool.close()
+    pool.join()
 
 if __name__ == '__main__':
     main()
