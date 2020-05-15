@@ -121,12 +121,15 @@ def main():
     print(time.asctime(time.localtime(time1)))
     urlf = []
     pool = multiprocessing.Pool(processes=4)
-    for n in range(5, 10):
-        urlf.append('http://reportapi.eastmoney.com/report/list?cb=datatable9813778&industryCode=*&pageSize=50&industry=*&rating=&ratingChange=&beginTime=2018-05-14&endTime=2020-05-14&pageNo={0}&fields=&qType=0&orgCode=&code=*&rcode=&_=1589466697703'.format(n))
+    for n in range(14, 50):
+        urlf.append('http://reportapi.eastmoney.com/report/list?cb=datatable276338&industryCode=*&pageSize=50&industry=*&rating=&ratingChange=&beginTime=2018-05-15&endTime=2020-05-15&pageNo={0}&fields=&qType=0&orgCode=&code=*&rcode=&_=1589531006002'.format(n))
 
     pbar = tqdm(urlf)
     for u in pbar:
-        pbar.set_description("processing %s" % u[170:171])
+        page = ''.join(list(filter(str.isdigit, u[169:172])))
+        #page = re.sub("\D", "", u[169:172])
+        #page = u[169:172].strip('&')
+        pbar.set_description("processing page %s" % str(page))
         try:
             datas = get_content(u, my_headers, 30)
             #print('网页抓取成功')
