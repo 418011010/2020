@@ -52,67 +52,69 @@ def get_content(url, headers,second):
 
 
 def ppddff(URL, J):
-    pdf0 = urlopen(URL)
+    try:
+        pdf0 = urlopen(URL)
 
-    # 创建一个与文档关联的解析器
+        # 创建一个与文档关联的解析器
 
-    parser = PDFParser(pdf0)
+        parser = PDFParser(pdf0)
 
-    # 创建一个PDF文档对象
+        # 创建一个PDF文档对象
 
-    doc = PDFDocument()
+        doc = PDFDocument()
 
-    # 连接两者
+        # 连接两者
 
-    parser.set_document(doc)
+        parser.set_document(doc)
 
-    doc.set_parser(parser)
+        doc.set_parser(parser)
 
-    # 初始化
-    doc.initialize('')
+        # 初始化
+        doc.initialize('')
 
-    # 创建PDF资源管理器
+        # 创建PDF资源管理器
 
-    resources = PDFResourceManager()
+        resources = PDFResourceManager()
 
-    # 创建参数分析器
+        # 创建参数分析器
 
-    laparam = LAParams()
+        laparam = LAParams()
 
-    # 创建一个聚合器，并接收资源管理器，参数分析器作为参数
+        # 创建一个聚合器，并接收资源管理器，参数分析器作为参数
 
-    device = PDFPageAggregator(resources, laparams=laparam)
+        device = PDFPageAggregator(resources, laparams=laparam)
 
-    # 创建一个页面解释器
+        # 创建一个页面解释器
 
-    interpreter = PDFPageInterpreter(resources, device)
+        interpreter = PDFPageInterpreter(resources, device)
 
-    for page in doc.get_pages():
+        for page in doc.get_pages():
 
-        # 使用页面解释器读取页面
+            # 使用页面解释器读取页面
 
-        interpreter.process_page(page)
+            interpreter.process_page(page)
 
-        # 使用聚合器读取页面页面内容
+            # 使用聚合器读取页面页面内容
 
-        layout = device.get_result()
+            layout = device.get_result()
 
-        for out in layout:
+            for out in layout:
 
-            if hasattr(out, 'get_text'):  # 因为文档中不只有text文本
+                if hasattr(out, 'get_text'):  # 因为文档中不只有text文本
 
-                txt = out.get_text()
-                # print(type(txt))
+                    txt = out.get_text()
+                    # print(type(txt))
 
-                result = re.findall(r'双[杀击]', txt)
-                # result = re.findall(r'双[杀击]', txt)
-                if result:
-                    print('\n' + str(result))
-                    print(J)
-                    print(URL)
-                    with open('pdfreader.txt', 'a', encoding='utf-8') as f:
-                        f.write('\n' + str(result) + '\n' + J + '\n' + URL)
-
+                    result = re.findall(r'双[杀击]', txt)
+                    # result = re.findall(r'双[杀击]', txt)
+                    if result:
+                        print('\n' + str(result))
+                        print(J)
+                        print(URL)
+                        with open('pdfreader.txt', 'a', encoding='utf-8') as f:
+                            f.write('\n' + str(result) + '\n' + J + '\n' + URL)
+    except Exception as e:
+        print('PDF打开异常', str(e))
 
 def main():
     time1 = time.time()
