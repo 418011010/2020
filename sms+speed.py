@@ -9,7 +9,7 @@ send_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 def send_message():
     account_sid = 'ACd615e71b7ad5f4686943f7e716e95b0f'
-    auth_token = 'a40401a59745b0c7e3e0202ef9dc3837'
+    auth_token = 'xxxxx'
     client = Client(account_sid, auth_token)
 
     message = client.messages \
