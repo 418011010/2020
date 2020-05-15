@@ -19,10 +19,6 @@ from pdfminer.layout import LTTextBoxHorizontal,LAParams
 from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
 from tqdm import tqdm
 importlib.reload(sys)
-# time1 = time.time()
-# print("初始时间为：", time1)
-
-
 
 my_headers = [
     "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36",
@@ -104,7 +100,7 @@ def ppddff(URL, J):
                 txt = out.get_text()
                 # print(type(txt))
 
-                result = re.findall(r'9.14|双[杀击]', txt)
+                result = re.findall(r'双[杀击]', txt)
                 # result = re.findall(r'双[杀击]', txt)
                 if result:
                     print('\n' + str(result))
@@ -151,12 +147,6 @@ def main():
             time2 = time.time()
             print(time.asctime(time.localtime(time2)))
 
+
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
