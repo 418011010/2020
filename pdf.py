@@ -17,6 +17,7 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LTTextBoxHorizontal,LAParams
 from pdfminer.pdfinterp import PDFTextExtractionNotAllowed
+from tqdm import tqdm
 importlib.reload(sys)
 # time1 = time.time()
 # print("初始时间为：", time1)
@@ -49,96 +50,109 @@ def get_content(url, headers,second):
     content = urllib.request.urlopen(req,timeout=second).read()
     return content.decode(encoding="utf-8")
 
-urlf = []
-for n in range(1, 10):
-    urlf.append('http://reportapi.eastmoney.com/report/list?cb=datatable9813778&industryCode=*&pageSize=50&industry=*&rating=&ratingChange=&beginTime=2018-05-14&endTime=2020-05-14&pageNo={0}&fields=&qType=0&orgCode=&code=*&rcode=&_=1589466697703'.format(n))
 
-result = {}
-for u in urlf:
-    try:
-        datas = get_content(u, my_headers, 30)
-        #print('网页抓取成功')
-        #print(datas)
-        res = re.findall(r'"encodeUrl":"(.*?)"', datas)
-        reslist = list(res)
-        #print(reslist)
-        #print(len(reslist))
-        urllist = []
-        for i in reslist:
-            #print(type(i))
-            urllist.append("http://data.eastmoney.com/report/zw_stock.jshtml?encodeUrl=" + str(i))
+def ppddff(URL, J):
+    pdf0 = urlopen(URL)
 
-        #print(urllist)
-        # uu = ['http://data.eastmoney.com/report/zw_stock.jshtml?encodeUrl=VGz4HJkVhdZud3DDbeo2N1caUHZ6ZrN4dCUGLSqIoWQ=', 'http://data.eastmoney.com/report/zw_stock.jshtml?encodeUrl=VGz4HJkVhdZud3DDbeo2N9IkpjKNngi6DIRfnXYTI2I=']
-        for j in urllist:
+    # 创建一个与文档关联的解析器
 
-            dd = get_content(j, my_headers, 30)
+    parser = PDFParser(pdf0)
 
-            r = re.findall(r'"attachUrl":"(.*?)"', dd)
-            # print(r[0])
+    # 创建一个PDF文档对象
 
-            pdf0 = urlopen(r[0])
-            # 创建一个与文档关联的解析器
+    doc = PDFDocument()
 
-            parser = PDFParser(pdf0)
+    # 连接两者
 
-            # 创建一个PDF文档对象
+    parser.set_document(doc)
 
-            doc = PDFDocument()
+    doc.set_parser(parser)
 
-            # 连接两者
+    # 初始化
+    doc.initialize('')
 
-            parser.set_document(doc)
+    # 创建PDF资源管理器
 
-            doc.set_parser(parser)
+    resources = PDFResourceManager()
 
-            # 初始化
-            doc.initialize('')
+    # 创建参数分析器
 
-            # 创建PDF资源管理器
+    laparam = LAParams()
 
-            resources = PDFResourceManager()
+    # 创建一个聚合器，并接收资源管理器，参数分析器作为参数
 
-            # 创建参数分析器
+    device = PDFPageAggregator(resources, laparams=laparam)
 
-            laparam = LAParams()
+    # 创建一个页面解释器
 
-            # 创建一个聚合器，并接收资源管理器，参数分析器作为参数
+    interpreter = PDFPageInterpreter(resources, device)
 
-            device = PDFPageAggregator(resources, laparams=laparam)
+    for page in doc.get_pages():
 
-            # 创建一个页面解释器
+        # 使用页面解释器读取页面
 
-            interpreter = PDFPageInterpreter(resources, device)
+        interpreter.process_page(page)
 
-            for page in doc.get_pages():
+        # 使用聚合器读取页面页面内容
 
-                # 使用页面解释器读取页面
+        layout = device.get_result()
 
-                interpreter.process_page(page)
+        for out in layout:
 
-                # 使用聚合器读取页面页面内容
+            if hasattr(out, 'get_text'):  # 因为文档中不只有text文本
 
-                layout = device.get_result()
+                txt = out.get_text()
+                # print(type(txt))
 
-                for out in layout:
-
-                    if hasattr(out, 'get_text'):  # 因为文档中不只有text文本
-
-                        txt = out.get_text()
-                        # print(type(txt))
-
-                        result = re.findall(r'9.14|双[杀击]', txt)
-                        #result = re.findall(r'双[杀击]', txt)
-                        if result:
-                            print(list(result))
-                            print(j)
-                            print(r[0])
+                result = re.findall(r'9.14|双[杀击]', txt)
+                # result = re.findall(r'双[杀击]', txt)
+                if result:
+                    print('\n' + str(result))
+                    print(J)
+                    print(URL)
+                    with open('pdfreader.txt', 'a', encoding='utf-8') as f:
+                        f.write('\n' + str(result) + '\n' + J + '\n' + URL)
 
 
-    except Exception as e:
-        print('网页打开异常', str(e))
+def main():
+    time1 = time.time()
+    print(time.asctime(time.localtime(time1)))
+    urlf = []
+    for n in range(1, 10):
+        urlf.append('http://reportapi.eastmoney.com/report/list?cb=datatable9813778&industryCode=*&pageSize=50&industry=*&rating=&ratingChange=&beginTime=2018-05-14&endTime=2020-05-14&pageNo={0}&fields=&qType=0&orgCode=&code=*&rcode=&_=1589466697703'.format(n))
 
+    pbar = tqdm(urlf)
+    for u in pbar:
+        pbar.set_description("processing %s" % u[170:171])
+        try:
+            datas = get_content(u, my_headers, 30)
+            #print('网页抓取成功')
+            #print(datas)
+            res = re.findall(r'"encodeUrl":"(.*?)"', datas)
+            reslist = list(res)
+            #print(reslist)
+            #print(len(reslist))
+            urllist = []
+            for i in reslist:
+                #print(type(i))
+                urllist.append("http://data.eastmoney.com/report/zw_stock.jshtml?encodeUrl=" + str(i))
+
+            #print(urllist)
+            # uu = ['http://data.eastmoney.com/report/zw_stock.jshtml?encodeUrl=VGz4HJkVhdZud3DDbeo2N1caUHZ6ZrN4dCUGLSqIoWQ=', 'http://data.eastmoney.com/report/zw_stock.jshtml?encodeUrl=VGz4HJkVhdZud3DDbeo2N9IkpjKNngi6DIRfnXYTI2I=']
+            for j in urllist:
+                dd = get_content(j, my_headers, 30)
+                r = re.findall(r'"attachUrl":"(.*?)"', dd)
+                # print(r[0])
+                ppddff(r[0], j)
+
+        except Exception as e:
+            print('网页打开异常', str(e))
+        finally:
+            time2 = time.time()
+            print(time.asctime(time.localtime(time2)))
+
+if __name__ == '__main__':
+    main()
 
 
 
