@@ -117,7 +117,7 @@ def main():
     time1 = time.time()
     print(time.asctime(time.localtime(time1)))
     urlf = []
-    for n in range(4, 6):
+    for n in range(1, 922):
         urlf.append('http://reportapi.eastmoney.com/report/list?cb=datatable9813778&industryCode=*&pageSize=50&industry=*&rating=&ratingChange=&beginTime=2018-05-14&endTime=2020-05-14&pageNo={0}&fields=&qType=0&orgCode=&code=*&rcode=&_=1589466697703'.format(n))
 
     pbar = tqdm(urlf)

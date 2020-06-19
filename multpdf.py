@@ -12,7 +12,7 @@ import json
 import pyocr
 import importlib
 from collections import Counter
-from pdfminer.pdfparser import  PDFParser,PDFDocument
+from pdfminer.pdfparser import PDFParser, PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import PDFPageAggregator
 from pdfminer.layout import LTTextBoxHorizontal,LAParams
@@ -121,15 +121,15 @@ def main():
     print(time.asctime(time.localtime(time1)))
     urlf = []
     pool = multiprocessing.Pool(processes=4)
-    for n in range(14, 50):
+    for n in range(1, 922):
         urlf.append('http://reportapi.eastmoney.com/report/list?cb=datatable276338&industryCode=*&pageSize=50&industry=*&rating=&ratingChange=&beginTime=2018-05-15&endTime=2020-05-15&pageNo={0}&fields=&qType=0&orgCode=&code=*&rcode=&_=1589531006002'.format(n))
 
     pbar = tqdm(urlf)
     for u in pbar:
-        page = ''.join(list(filter(str.isdigit, u[169:172])))
-        #page = re.sub("\D", "", u[169:172])
-        #page = u[169:172].strip('&')
-        pbar.set_description("processing page %s" % str(page))
+        pp = ''.join(list(filter(str.isdigit, u[169:172])))
+        #pp = re.sub("\D", "", u[169:172])
+        #pp = u[169:172].strip('&')
+        pbar.set_description("processing page %s" % str(pp))
         try:
             datas = get_content(u, my_headers, 30)
             #print('网页抓取成功')
