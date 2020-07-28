@@ -106,12 +106,12 @@ def main():
                     # width在前， height在后
                     box = (left, 948, right, 1048)
                     region = img.crop(box)
-                    region.save('alarm.jpg')
+                    region.save('alarmS.jpg')
                     ak = gettoken()
-                    gettxt('alarm.jpg', ak, 'alarm.txt')
-                    text2mp3('alarm.txt', 'alarm.mp3')
-                    trans_mp3_to_wav('alarm.mp3', 'alarm.wav')
-                    playwave('alarm.wav')
+                    gettxt('alarmS.jpg', ak, 'alarmS.txt')
+                    text2mp3('alarmS.txt', 'alarmS.mp3')
+                    trans_mp3_to_wav('alarmS.mp3', 'alarmS.wav')
+                    playwave('alarmS.wav')
                     time.sleep(2)
                 elif top <= 900 <= left and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1280:
                     time.sleep(0.5)
@@ -126,14 +126,14 @@ def main():
                     # width在前， height在后
                     box = (left, 884, right, 984)
                     region = img.crop(box)
-                    region.save('alarm.jpg')
+                    region.save('alarmS.jpg')
                     #grabjpg('test.jpg', left, 774, right, 984)
                     # window_capture('test.jpg', hwnd)
                     ak = gettoken()
-                    gettxt('alarm.jpg', ak, 'alarm.txt')
-                    text2mp3('alarm.txt', 'alarm.mp3')
-                    trans_mp3_to_wav('alarm.mp3', 'alarm.wav')
-                    playwave('alarm.wav')
+                    gettxt('alarmS.jpg', ak, 'alarmS.txt')
+                    text2mp3('alarmS.txt', 'alarmS.mp3')
+                    trans_mp3_to_wav('alarmS.mp3', 'alarmS.wav')
+                    playwave('alarmS.wav')
                     time.sleep(2)
                 elif top <= 580 <= left and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1366:
                     time.sleep(0.5)
@@ -148,58 +148,98 @@ def main():
                     # width在前， height在后
                     box = (left, 628, right, 728)
                     region = img.crop(box)
-                    region.save('alarm.jpg')
+                    region.save('alarmS.jpg')
                     #grabjpg('test.jpg', left, 774, right, 984)
                     # window_capture('test.jpg', hwnd)
                     ak = gettoken()
-                    gettxt('alarm.jpg', ak, 'alarm.txt')
-                    text2mp3('alarm.txt', 'alarm.mp3')
-                    trans_mp3_to_wav('alarm.mp3', 'alarm.wav')
-                    playwave('alarm.wav')
+                    gettxt('alarmS.jpg', ak, 'alarmS.txt')
+                    text2mp3('alarmS.txt', 'alarmS.mp3')
+                    trans_mp3_to_wav('alarmS.mp3', 'alarmS.wav')
+                    playwave('alarmS.wav')
                     time.sleep(2)
-                else:
-                    print('小播工作中...')
-                    time.sleep(2)
-                    continue
+
+                elif hwnd1 or hwnd2:
+                    #获取窗口左上角和右下角坐标
+                    left, top, right, bottom = win32gui.GetWindowRect(hwnd1 if hwnd1 else hwnd2)
+                    #print(getcont(hwnd)) 这句有bug
+                    #print(left, top, right, bottom)
+                    # clist = get_child_windows(hwnd)
+                    # print(clist)
+
+                    if top <= 900 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1920:
+                        time.sleep(0.5)
+                        grabjpg('alarmL.jpg', left, 838, right, 1048)
+                        #window_capture('test.jpg', hwnd)
+                        ak = gettoken()
+                        gettxt('alarmL.jpg', ak, 'alarmL.txt')
+                        text2mp3('alarmL.txt', 'alarmL.mp3')
+                        trans_mp3_to_wav('alarmL.mp3', 'alarmL.wav')
+                        playwave('alarmL.wav')
+                        time.sleep(2)
+                    elif top <= 835 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1280:
+                        time.sleep(0.5)
+                        grabjpg('alarmL.jpg', left, 774, right, 984)
+                        # window_capture('test.jpg', hwnd)
+                        ak = gettoken()
+                        gettxt('alarmL.jpg', ak, 'alarmL.txt')
+                        text2mp3('alarmL.txt', 'alarmL.mp3')
+                        trans_mp3_to_wav('alarmL.mp3', 'alarmL.wav')
+                        playwave('alarmL.wav')
+                        time.sleep(2)
+                    elif top <= 580 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1366:
+                        time.sleep(0.5)
+                        grabjpg('alarmL.jpg', left, 518, right, 728)
+                        # window_capture('test.jpg', hwnd)
+                        ak = gettoken()
+                        gettxt('alarmL.jpg', ak, 'alarmL.txt')
+                        text2mp3('alarmL.txt', 'alarmL.mp3')
+                        trans_mp3_to_wav('alarmL.mp3', 'alarmL.wav')
+                        playwave('alarmL.wav')
+                        time.sleep(2)
 
             elif hwnd1 or hwnd2:
-                #获取窗口左上角和右下角坐标
+                # 获取窗口左上角和右下角坐标
                 left, top, right, bottom = win32gui.GetWindowRect(hwnd1 if hwnd1 else hwnd2)
-                #print(getcont(hwnd)) 这句有bug
-                #print(left, top, right, bottom)
+                # print(getcont(hwnd)) 这句有bug
+                # print(left, top, right, bottom)
                 # clist = get_child_windows(hwnd)
                 # print(clist)
 
                 if top <= 900 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1920:
-                    grabjpg('test.jpg', left, 838, right, 1048)
-                    #window_capture('test.jpg', hwnd)
+                    time.sleep(0.5)
+                    grabjpg('alarmL.jpg', left, 838, right, 1048)
+                    # window_capture('test.jpg', hwnd)
                     ak = gettoken()
-                    gettxt('test.jpg', ak, 'test.txt')
-                    text2mp3('test.txt', 's1.mp3')
-                    trans_mp3_to_wav('s1.mp3', 's1.wav')
-                    playwave('s1.wav')
+                    gettxt('alarmL.jpg', ak, 'alarmL.txt')
+                    text2mp3('alarmL.txt', 'alarmL.mp3')
+                    trans_mp3_to_wav('alarmL.mp3', 'alarmL.wav')
+                    playwave('alarmL.wav')
                     time.sleep(2)
                 elif top <= 835 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1280:
-                    grabjpg('test.jpg', left, 774, right, 984)
+                    time.sleep(0.5)
+                    grabjpg('alarmL.jpg', left, 774, right, 984)
                     # window_capture('test.jpg', hwnd)
                     ak = gettoken()
-                    gettxt('test.jpg', ak, 'test.txt')
-                    text2mp3('test.txt', 's1.mp3')
-                    trans_mp3_to_wav('s1.mp3', 's1.wav')
-                    playwave('s1.wav')
+                    gettxt('alarmL.jpg', ak, 'alarmL.txt')
+                    text2mp3('alarmL.txt', 'alarmL.mp3')
+                    trans_mp3_to_wav('alarmL.mp3', 'alarmL.wav')
+                    playwave('alarmL.wav')
                     time.sleep(2)
                 elif top <= 580 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1366:
-                    grabjpg('test.jpg', left, 518, right, 728)
+                    time.sleep(0.5)
+                    grabjpg('alarmL.jpg', left, 518, right, 728)
                     # window_capture('test.jpg', hwnd)
                     ak = gettoken()
-                    gettxt('test.jpg', ak, 'test.txt')
-                    text2mp3('test.txt', 's1.mp3')
-                    trans_mp3_to_wav('s1.mp3', 's1.wav')
-                    playwave('s1.wav')
+                    gettxt('alarmL.jpg', ak, 'alarmL.txt')
+                    text2mp3('alarmL.txt', 'alarmL.mp3')
+                    trans_mp3_to_wav('alarmL.mp3', 'alarmL.wav')
+                    playwave('alarmL.wav')
                     time.sleep(2)
+
             else:
                 print('小播工作中....')
                 time.sleep(2)
+                continue
 
         except BaseException as e:
             #print("未找到目标窗口")
