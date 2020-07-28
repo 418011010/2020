@@ -2,6 +2,7 @@
 
 import requests
 import base64
+from datetime import datetime
 
 '''
 通用文字识别
@@ -39,18 +40,62 @@ def gettxt(PICPATH,AK,OUTPUT):
             f.write(err)
 
 
+# def gettoken():
+#     # client_id 为官网获取的AK， client_secret 为官网获取的SK
+#     host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=G0SzMnDTCLhBCaXtN9AGXszv&client_secret=HM6cwhLji3cZpii8l5LGY5ZgZwQsEoWZ'
+#     response = requests.get(host)
+#     #dt = datetime.now()
+#     #first = int(dt.timestamp())
+#
+#     if response:
+#         dic = response.json()
+#         print(dic)
+#         return dic['access_token']
+
 def gettoken():
-    # client_id 为官网获取的AK， client_secret 为官网获取的SK
-    host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=G0SzMnDTCLhBCaXtN9AGXszv&client_secret=HM6cwhLji3cZpii8l5LGY5ZgZwQsEoWZ'
-    response = requests.get(host)
-    if response:
-        dic = response.json()
-        return dic['access_token']
+    try:
+        with open('token', "rb") as f:
+            cc = f.read()
+        c1 = str(cc, 'utf-8')
+        #print(c1)
+        c2 = eval(c1)
+        #print(type(c2))
+        dt = datetime.now()
+        now = int(dt.timestamp())
+        if now - c2['gettime'] <= 2500000:
+            return c2['access_token']
+        else:
+            host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=G0SzMnDTCLhBCaXtN9AGXszv&client_secret=HM6cwhLji3cZpii8l5LGY5ZgZwQsEoWZ'
+            response = requests.get(host)
+            dt = datetime.now()
+            gettime = int(dt.timestamp())
+            # print(gettime)
+            if response:
+                dic = response.json()
+                dic['gettime'] = gettime
+
+                with open('token', "wb") as f:
+                    f.write(str(dic).encode())
+                return dic['access_token']
+    except FileNotFoundError as e:
+        # client_id 为官网获取的AK， client_secret 为官网获取的SK
+        host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=G0SzMnDTCLhBCaXtN9AGXszv&client_secret=HM6cwhLji3cZpii8l5LGY5ZgZwQsEoWZ'
+        response = requests.get(host)
+        dt = datetime.now()
+        gettime = int(dt.timestamp())
+        #print(gettime)
+        if response:
+            dic = response.json()
+            dic['gettime'] = gettime
+
+            with open('token', "wb") as f:
+                f.write(str(dic).encode())
+            return dic['access_token']
 
 
 if __name__ == "__main__":
     ak = gettoken()
     #print(ak)
-    gettxt('test.jpg', ak, 'test.txt')
+    #gettxt('test.jpg', ak, 'test.txt')
 
 
