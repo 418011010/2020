@@ -104,7 +104,7 @@ def main():
                     # 前两个坐标点是左上角坐标
                     # 后两个坐标点是右下角坐标
                     # width在前， height在后
-                    box = (left, 948, right, 1048)
+                    box = (left, 978, right, 1048)
                     region = img.crop(box)
                     region.save('alarmS.jpg')
                     ak = gettoken()
@@ -112,7 +112,7 @@ def main():
                     text2mp3('alarmS.txt', 'alarmS.mp3')
                     trans_mp3_to_wav('alarmS.mp3', 'alarmS.wav')
                     playwave('alarmS.wav')
-                    time.sleep(2)
+                    time.sleep(3)
                 elif top <= 900 <= left and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1280:
                     time.sleep(0.5)
                     win32api.keybd_event(win32con.VK_SNAPSHOT, 0)
@@ -124,7 +124,7 @@ def main():
                     # 前两个坐标点是左上角坐标
                     # 后两个坐标点是右下角坐标
                     # width在前， height在后
-                    box = (left, 884, right, 984)
+                    box = (1080, 914, right, 984)
                     region = img.crop(box)
                     region.save('alarmS.jpg')
                     #grabjpg('test.jpg', left, 774, right, 984)
@@ -134,7 +134,7 @@ def main():
                     text2mp3('alarmS.txt', 'alarmS.mp3')
                     trans_mp3_to_wav('alarmS.mp3', 'alarmS.wav')
                     playwave('alarmS.wav')
-                    time.sleep(2)
+                    time.sleep(3)
                 elif top <= 580 <= left and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1366:
                     time.sleep(0.5)
                     win32api.keybd_event(win32con.VK_SNAPSHOT, 0)
@@ -146,7 +146,7 @@ def main():
                     # 前两个坐标点是左上角坐标
                     # 后两个坐标点是右下角坐标
                     # width在前， height在后
-                    box = (left, 628, right, 728)
+                    box = (left, 658, right, 728)
                     region = img.crop(box)
                     region.save('alarmS.jpg')
                     #grabjpg('test.jpg', left, 774, right, 984)
@@ -156,7 +156,7 @@ def main():
                     text2mp3('alarmS.txt', 'alarmS.mp3')
                     trans_mp3_to_wav('alarmS.mp3', 'alarmS.wav')
                     playwave('alarmS.wav')
-                    time.sleep(2)
+                    time.sleep(3)
 
                 elif hwnd1 or hwnd2:
                     #获取窗口左上角和右下角坐标
@@ -167,8 +167,8 @@ def main():
                     # print(clist)
 
                     if top <= 900 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1920:
-                        time.sleep(0.5)
-                        grabjpg('alarmL.jpg', left, 838, right, 1048)
+                        time.sleep(0.1)
+                        grabjpg('alarmL.jpg', left, 898, right, 1040)
                         #window_capture('test.jpg', hwnd)
                         ak = gettoken()
                         gettxt('alarmL.jpg', ak, 'alarmL.txt')
@@ -177,8 +177,8 @@ def main():
                         playwave('alarmL.wav')
                         time.sleep(2)
                     elif top <= 835 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1280:
-                        time.sleep(0.5)
-                        grabjpg('alarmL.jpg', left, 774, right, 984)
+                        time.sleep(0.1)
+                        grabjpg('alarmL.jpg', left, 834, right, 980)
                         # window_capture('test.jpg', hwnd)
                         ak = gettoken()
                         gettxt('alarmL.jpg', ak, 'alarmL.txt')
@@ -187,8 +187,8 @@ def main():
                         playwave('alarmL.wav')
                         time.sleep(2)
                     elif top <= 580 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1366:
-                        time.sleep(0.5)
-                        grabjpg('alarmL.jpg', left, 518, right, 728)
+                        time.sleep(0.1)
+                        grabjpg('alarmL.jpg', left, 578, right, 728)
                         # window_capture('test.jpg', hwnd)
                         ak = gettoken()
                         gettxt('alarmL.jpg', ak, 'alarmL.txt')
@@ -207,7 +207,7 @@ def main():
 
                 if top <= 900 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1920:
                     time.sleep(0.5)
-                    grabjpg('alarmL.jpg', left, 838, right, 1048)
+                    grabjpg('alarmL.jpg', left, 898, right, 1048)
                     # window_capture('test.jpg', hwnd)
                     ak = gettoken()
                     gettxt('alarmL.jpg', ak, 'alarmL.txt')
@@ -217,7 +217,7 @@ def main():
                     time.sleep(2)
                 elif top <= 835 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1280:
                     time.sleep(0.5)
-                    grabjpg('alarmL.jpg', left, 774, right, 984)
+                    grabjpg('alarmL.jpg', left, 834, right, 984)
                     # window_capture('test.jpg', hwnd)
                     ak = gettoken()
                     gettxt('alarmL.jpg', ak, 'alarmL.txt')
@@ -227,7 +227,7 @@ def main():
                     time.sleep(2)
                 elif top <= 580 and win32api.GetSystemMetrics(win32con.SM_CXSCREEN) == 1366:
                     time.sleep(0.5)
-                    grabjpg('alarmL.jpg', left, 518, right, 728)
+                    grabjpg('alarmL.jpg', left, 578, right, 728)
                     # window_capture('test.jpg', hwnd)
                     ak = gettoken()
                     gettxt('alarmL.jpg', ak, 'alarmL.txt')

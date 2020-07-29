@@ -28,11 +28,15 @@ def gettxt(PICPATH,AK,OUTPUT):
             out = []
             for i in outlist:
                 out.append(i['words'])
-            print(out)
-            out = str(out).encode()
-
-            with open(OUTPUT, "wb") as f:
-                f.write(out)
+            #print(out[-2:])
+            if out[0] in ['处理成功', '9.2', '2']:
+                with open(OUTPUT, "wb") as f:
+                    f.write(''.encode())
+            else:
+                print(out[-2:])
+                out = str(out[-2:]).encode()
+                with open(OUTPUT, "wb") as f:
+                    f.write(out)
     else:
         print('图片超出限制')
         err = '图片超出限制'.encode()
@@ -96,6 +100,6 @@ def gettoken():
 if __name__ == "__main__":
     ak = gettoken()
     #print(ak)
-    #gettxt('test.jpg', ak, 'test.txt')
+    gettxt('alarmS.jpg', ak, 'test.txt')
 
 
