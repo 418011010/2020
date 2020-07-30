@@ -46,7 +46,7 @@ def gettxt(PICPATH,AK,OUTPUT):
 
 # def gettoken():
 #     # client_id 为官网获取的AK， client_secret 为官网获取的SK
-#     host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=G0SzMnDTCLhBCaXtN9AGXszv&client_secret=HM6cwhLji3cZpii8l5LGY5ZgZwQsEoWZ'
+#     host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=&client_secret='
 #     response = requests.get(host)
 #     #dt = datetime.now()
 #     #first = int(dt.timestamp())
@@ -69,7 +69,7 @@ def gettoken():
         if now - c2['gettime'] <= 2500000:
             return c2['access_token']
         else:
-            host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=G0SzMnDTCLhBCaXtN9AGXszv&client_secret=HM6cwhLji3cZpii8l5LGY5ZgZwQsEoWZ'
+            host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=&client_secret='
             response = requests.get(host)
             dt = datetime.now()
             gettime = int(dt.timestamp())
@@ -83,7 +83,7 @@ def gettoken():
                 return dic['access_token']
     except FileNotFoundError as e:
         # client_id 为官网获取的AK， client_secret 为官网获取的SK
-        host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=G0SzMnDTCLhBCaXtN9AGXszv&client_secret=HM6cwhLji3cZpii8l5LGY5ZgZwQsEoWZ'
+        host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=&client_secret='
         response = requests.get(host)
         dt = datetime.now()
         gettime = int(dt.timestamp())
