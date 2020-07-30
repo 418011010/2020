@@ -104,7 +104,7 @@ def main():
                     # 前两个坐标点是左上角坐标
                     # 后两个坐标点是右下角坐标
                     # width在前， height在后
-                    box = (left, 975, right, 1048)
+                    box = (left, 975, right, 1020)
                     region = img.crop(box)
                     region.save('alarmS.jpg')
                     ak = gettoken()
