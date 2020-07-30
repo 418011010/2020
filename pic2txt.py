@@ -24,12 +24,12 @@ def gettxt(PICPATH,AK,OUTPUT):
         if response:
             #print(response.json())
             outlist = response.json().get('words_result')
-            #print(outlist)
+            #print(outlist[-2:])
             out = []
             for i in outlist:
                 out.append(i['words'])
             #print(out[-2:])
-            if out[0] in ['处理成功', '9.2', '2']:
+            if len(out) == 0 or out[0] in ['处理成功', '9.2', '2']:
                 with open(OUTPUT, "wb") as f:
                     f.write(''.encode())
             else:
