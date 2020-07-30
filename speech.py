@@ -2,8 +2,8 @@
 from aip import AipSpeech
 
 APP_ID = "21438044"
-API_KEY = "Tqbhwi5ccGciepEL2T2hvTpL"
-SECRET_KEY = "GIsK6S8LudsHGidFHo5HvezKg5ri4ujL"
+API_KEY = ""
+SECRET_KEY = ""
 
 
 def text2mp3(text, mp3):
