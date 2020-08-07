@@ -9,7 +9,10 @@ from PIL import ImageGrab, Image
 from speech import text2mp3
 from pic2txt import gettxt, gettoken
 from MP3play import trans_mp3_to_wav, playwave
+import logging
 
+
+logging.basicConfig(level=logging.WARNING)
 
 def grabjpg(path, le, t, r, b):
     img = ImageGrab.grab((le, t, r, b))

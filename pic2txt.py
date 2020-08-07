@@ -3,7 +3,8 @@
 import requests
 import base64
 from datetime import datetime
-
+import re
+import json
 '''
 通用文字识别
 '''
@@ -30,17 +31,22 @@ def gettxt(PICPATH,AK,OUTPUT):
                 out.append(i['words'])
             #print(out[-2:])
             if len(out) == 0 or out[0] in ['处理成功', '9.2', '2']:
-                with open(OUTPUT, "wb") as f:
-                    f.write(''.encode())
+                with open(OUTPUT, "w", encoding='utf-8') as f:
+                    f.write("")
             else:
-                print(out[-2:])
-                out = str(out[-2:]).encode()
-                with open(OUTPUT, "wb") as f:
-                    f.write(out)
+                #print(out[-2:])
+                #out = str(out[-2:]
+                aa = ""
+                for t in out[-2:]:
+                    bb = re.sub(r"\d|\.|开始告警", "", t)
+                    aa = aa + bb
+                print(aa)
+                with open(OUTPUT, "w", encoding='utf-8') as f:
+                    f.write(aa)
     else:
-        print('图片超出限制')
-        err = '图片超出限制'.encode()
-        with open(OUTPUT, "wb") as f:
+        err = '图片超出限制'
+        print(err)
+        with open(OUTPUT, "w", encoding='utf-8') as f:
             f.write(err)
 
 
@@ -60,6 +66,7 @@ def gettoken():
     try:
         with open('token', "rb") as f:
             cc = f.read()
+        #print(type(cc))
         c1 = str(cc, 'utf-8')
         #print(c1)
         c2 = eval(c1)
@@ -69,7 +76,7 @@ def gettoken():
         if now - c2['gettime'] <= 2500000:
             return c2['access_token']
         else:
-            host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=&client_secret='
+            host = ''
             response = requests.get(host)
             dt = datetime.now()
             gettime = int(dt.timestamp())
@@ -79,11 +86,12 @@ def gettoken():
                 dic['gettime'] = gettime
 
                 with open('token', "wb") as f:
-                    f.write(str(dic).encode())
+                    #f.write(str(dic).encode())
+                    f.write(json.dumps(dic).encode())
                 return dic['access_token']
     except FileNotFoundError as e:
         # client_id 为官网获取的AK， client_secret 为官网获取的SK
-        host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=&client_secret='
+        host = ''
         response = requests.get(host)
         dt = datetime.now()
         gettime = int(dt.timestamp())
@@ -93,13 +101,15 @@ def gettoken():
             dic['gettime'] = gettime
 
             with open('token', "wb") as f:
-                f.write(str(dic).encode())
+                #f.write(str(dic).encode())
+                f.write(json.dumps(dic).encode())
             return dic['access_token']
 
 
 if __name__ == "__main__":
+
     ak = gettoken()
     #print(ak)
-    gettxt('alarmS.jpg', ak, 'test.txt')
+    #gettxt('alarmS.jpg', ak, 'test.txt')
 
 
